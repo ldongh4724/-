@@ -1,101 +1,102 @@
 :root {
     --bg: #05070a;
-    --card: #0d1117;
+    --side: #0d1117;
     --accent: #00f2ff;
     --green: #00ff95;
     --red: #ff3366;
-    --text: #e6edf3;
+    --font-main: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-logo: 'Orbitron', sans-serif;
 }
 
 body {
     background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
+    color: #e6edf3;
+    font-family: var(--font-main);
     margin: 0;
+    transition: 0.3s;
     overflow: hidden;
 }
 
-/* 사이버펑크 폰트 적용 */
-.logo, h2, h3, .ticker-bar, .pos-toggle button {
-    font-family: 'Orbitron', sans-serif;
+/* 폰트 일괄 변경 */
+h2, h3, .section-title, .logo, .ticker-bar, button {
+    font-family: var(--font-logo);
     letter-spacing: 1px;
 }
 
-/* 상단 시세 바 */
-.ticker-bar {
-    background: rgba(13, 17, 23, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid #30363d;
-    padding: 8px 30px;
-    display: flex;
-    gap: 20px;
-    font-size: 0.8rem;
+input, textarea, .log-item {
+    font-family: var(--font-mono);
 }
 
-/* 사이드바 네온 효과 */
+/* 사이드바 토글 로직 */
 .sidebar {
     width: 260px;
-    background: var(--card);
+    height: 100vh;
+    background: var(--side);
     border-right: 1px solid #30363d;
-    padding: 30px 15px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: 0.3s ease-in-out;
+    z-index: 100;
 }
 
-.nav-menu li.active {
-    background: rgba(0, 242, 255, 0.1);
+.sidebar-toggle {
+    position: fixed;
+    left: 270px;
+    bottom: 20px;
+    background: var(--side);
+    border: 1px solid var(--accent);
     color: var(--accent);
-    box-shadow: inset 4px 0 0 var(--accent);
-}
-
-/* 글래스모피즘 카드 */
-.glass-card {
-    background: rgba(22, 27, 34, 0.7);
-    border: 1px solid #30363d;
-    border-radius: 16px;
-    padding: 25px;
-    backdrop-filter: blur(5px);
-}
-
-/* 로그 아이템 스타일 업그레이드 */
-.log-item {
-    background: var(--card);
-    border: 1px solid #30363d;
-    border-radius: 12px;
-    padding: 15px;
-    position: relative;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 110;
     transition: 0.3s;
 }
 
-.log-item:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
+body.sidebar-closed .sidebar { left: -260px; }
+body.sidebar-closed .sidebar-toggle { left: 20px; }
+body.sidebar-closed .main-content { margin-left: 0; }
+
+.main-content {
+    margin-left: 260px;
+    padding: 60px 40px;
+    height: 100vh;
+    overflow-y: auto;
+    transition: 0.3s;
 }
 
-.action-btns {
+/* 중앙 정렬 레이아웃 */
+.center-layout {
     display: flex;
-    gap: 8px;
-    margin-top: 15px;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
 }
 
-.edit-btn, .del-btn {
-    flex: 1;
-    padding: 6px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.7rem;
-    font-weight: bold;
+.glass-input-box {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(22, 27, 34, 0.8);
+    border: 1px solid #30363d;
+    padding: 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 
-.edit-btn { background: #30363d; color: white; }
-.del-btn { background: rgba(255, 51, 102, 0.1); color: var(--red); }
-
-/* 모달 스타일 */
-.modal {
-    display: none;
+/* 시세 바 업그레이드 */
+.ticker-bar {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8);
-    justify-content: center; align-items: center;
-    z-index: 1000;
+    top: 0; width: 100%;
+    background: rgba(5, 7, 10, 0.9);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #30363d;
+    z-index: 90;
 }
-.modal-content { width: 400px; }
+.ticker-item { margin-right: 20px; display: inline-block; }
+.ticker-item small { font-size: 0.7rem; margin-left: 4px; }
