@@ -2,11 +2,20 @@ let logs = JSON.parse(localStorage.getItem('tradeLogs') || '[]');
 let currentPos = 'LONG';
 let editingId = null;
 
+// 사이드바 토글
 function toggleSidebar() {
     document.body.classList.toggle('sidebar-closed');
     document.getElementById('toggleIcon').innerText = document.body.classList.contains('sidebar-closed') ? '▶' : '◀';
 }
 
+// 하단 시세 바 토글
+function toggleTicker() {
+    document.body.classList.toggle('ticker-closed');
+    const icon = document.getElementById('tickerToggleIcon');
+    icon.innerText = document.body.classList.contains('ticker-closed') ? '▲' : '▼';
+}
+
+// 실시간 시세 연동
 function connectTicker() {
     const streams = 'btcusdt@ticker/ethusdt@ticker/solusdt@ticker/xrpusdt@ticker';
     const ws = new WebSocket(`wss://stream.binance.com:9443/stream?streams=${streams}`);
@@ -23,59 +32,42 @@ function connectTicker() {
     };
 }
 
-// 공통 통계 계산 함수
+// 통계 로직
 function getStats(data) {
     if (!data.length) return { count: 0, winRate: "0.0", pnl: "0.00" };
     const wins = data.filter(l => parseFloat(l.profitRate) > 0).length;
     const pnl = data.reduce((a, b) => a + parseFloat(b.profitRate), 0).toFixed(2);
-    return {
-        count: data.length,
-        winRate: ((wins / data.length) * 100).toFixed(1),
-        pnl: pnl
-    };
+    return { count: data.length, winRate: ((wins / data.length) * 100).toFixed(1), pnl: pnl };
 }
 
-// 1. 대시보드 통계 업데이트 (기간별 + 전체)
 function updateDashboardStats() {
     const now = new Date();
     const calc = (days) => logs.filter(l => (now - new Date(l.fullDate)) < (days * 24 * 60 * 60 * 1000));
     
-    const p24h = getStats(calc(1)).pnl;
-    const p7d = getStats(calc(7)).pnl;
-    const p30d = getStats(calc(30)).pnl;
-    const p1y = getStats(calc(365)).pnl;
+    const p24 = getStats(calc(1)).pnl, p7 = getStats(calc(7)).pnl, p30 = getStats(calc(30)).pnl, p1y = getStats(calc(365)).pnl;
     const life = getStats(logs);
 
-    // 기간별 수익률 렌더링
     document.getElementById('periodStats').innerHTML = `
-        <div class="card"><h4>24H PNL</h4><p style="color:${p24h>=0?'#00ff95':'#ff3366'}">${p24h}%</p></div>
-        <div class="card"><h4>7D PNL</h4><p style="color:${p7d>=0?'#00ff95':'#ff3366'}">${p7d}%</p></div>
-        <div class="card"><h4>30D PNL</h4><p style="color:${p30d>=0?'#00ff95':'#ff3366'}">${p30d}%</p></div>
-        <div class="card"><h4>1Y PNL</h4><p style="color:${p1y>=0?'#00ff95':'#ff3366'}">${p1y}%</p></div>
-    `;
+        <div class="card"><h4>24H PNL</h4><p style="color:${p24>=0?'#00ff95':'#ff3366'}">${p24}%</p></div>
+        <div class="card"><h4>7D PNL</h4><p style="color:${p7>=0?'#00ff95':'#ff3366'}">${p7}%</p></div>
+        <div class="card"><h4>30D PNL</h4><p style="color:${p30>=0?'#00ff95':'#ff3366'}">${p30}%</p></div>
+        <div class="card"><h4>1Y PNL</h4><p style="color:${p1y>=0?'#00ff95':'#ff3366'}">${p1y}%</p></div>`;
 
-    // 전체 통계 렌더링
     document.getElementById('lifetimeStats').innerHTML = `
         <div class="card"><h4>TOTAL TRADES</h4><p>${life.count}</p></div>
         <div class="card"><h4>WIN RATE</h4><p>${life.winRate}%</p></div>
-        <div class="card"><h4>NET PNL</h4><p style="color:${life.pnl>=0?'#00ff95':'#ff3366'}">${life.pnl}%</p></div>
-    `;
+        <div class="card"><h4>NET PNL</h4><p style="color:${life.pnl>=0?'#00ff95':'#ff3366'}">${life.pnl}%</p></div>`;
 }
 
-// 2. 분석 탭 (사용자 지정 기간)
 function filterLogs() {
-    const start = document.getElementById('startDate').value;
-    const end = document.getElementById('endDate').value;
-    if (!start || !end) return alert("날짜를 선택하세요.");
-
+    const start = document.getElementById('startDate').value, end = document.getElementById('endDate').value;
+    if (!start || !end) return alert("날짜 선택");
     const filtered = logs.filter(l => l.date >= start && l.date <= end);
     const s = getStats(filtered);
-
     document.getElementById('queryAnalysis').innerHTML = `
         <div class="card"><h4>PERIOD TRADES</h4><p>${s.count}</p></div>
         <div class="card"><h4>PERIOD WIN RATE</h4><p>${s.winRate}%</p></div>
-        <div class="card"><h4>PERIOD PNL</h4><p style="color:${s.pnl>=0?'#00ff95':'#ff3366'}">${s.pnl}%</p></div>
-    `;
+        <div class="card"><h4>PERIOD PNL</h4><p style="color:${s.pnl>=0?'#00ff95':'#ff3366'}">${s.pnl}%</p></div>`;
     document.getElementById('filteredLogs').innerHTML = filtered.reverse().map(l => createCard(l)).join('');
 }
 
