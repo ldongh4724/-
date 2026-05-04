@@ -7,20 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="sidebar-open ticker-open">
-
-    <div id="loginOverlay" class="login-o<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Terminal Pro</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-</head>
 <body class="sidebar-open">
 
-    <!-- 로그인 -->
+    <!-- 로그인 오버레이 -->
     <div id="loginOverlay" class="login-overlay">
         <div class="glass-input-box">
             <div class="section-title" style="text-align: center;">TERMINAL_ACCESS</div>
@@ -30,7 +19,7 @@
         </div>
     </div>
 
-    <!-- 사이드바 토글 버튼 (상단 고정) -->
+    <!-- 사이드바 토글 버튼 -->
     <button class="sidebar-toggle" onclick="toggleSidebar()">
         <span id="toggleIcon">◀</span>
     </button>
@@ -48,7 +37,7 @@
         </nav>
 
         <!-- 메인 콘텐츠 -->
-        <main class="main-content" id="mainContent">
+        <main class="main-content">
             <!-- DASHBOARD -->
             <section id="menuSection" class="content-section">
                 <div class="section-title">EQUITY_OVERVIEW</div>
@@ -96,99 +85,6 @@
                     </div>
                     <div class="date-inputs">
                         <input type="date" id="startDate"> <span>~</span> <input type="date" id="endDate">
-                        <button onclick="filterLogs()" class="query-btn">QUERY</button>
-                    </div>
-                </div>
-                <div id="queryAnalysis" class="analysis-grid" style="margin-top:20px;"></div>
-                <div id="filteredLogs" class="log-grid"></div>
-            </section>
-        </main>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>verlay">
-        <div class="glass-input-box">
-            <div class="section-title" style="text-align: center;">TERMINAL_ACCESS</div>
-            <input type="text" id="userName" placeholder="OPERATOR NAME">
-            <input type="number" id="initialSeed" placeholder="INITIAL CAPITAL (USDT)">
-            <button class="neon-save-btn" onclick="handleLogin()">INITIALIZE SYSTEM</button>
-        </div>
-    </div>
-
-    <div class="ticker-wrapper" id="tickerWrapper">
-        <button class="ticker-toggle-btn" onclick="toggleTicker()"><span id="tickerToggleIcon">▼</span></button>
-        <div class="ticker-bar" id="tickerBar">
-            <div class="ticker-content">
-                <div class="ticker-item">BTC <span id="btcPrice">-</span> <small id="btcChange">-</small></div>
-                <div class="ticker-item">ETH <span id="ethPrice">-</span> <small id="ethChange">-</small></div>
-                <div class="ticker-item">SOL <span id="solPrice">-</span> <small id="solChange">-</small></div>
-                <div class="ticker-item">XRP <span id="xrpPrice">-</span> <small id="xrpChange">-</small></div>
-            </div>
-            <div class="status-live" id="userDisplay">● SYSTEM ACTIVE</div>
-        </div>
-    </div>
-
-    <button class="sidebar-toggle" onclick="toggleSidebar()"><span id="toggleIcon">◀</span></button>
-
-    <div class="app-container">
-        <nav class="sidebar" id="sidebar">
-            <div class="sidebar-header" id="terminalBrand">TERMINAL_v1.0</div>
-            <ul class="nav-menu">
-                <li onclick="showSection('menuSection')" class="active" id="nav-menuSection">🏠 DASHBOARD</li>
-                <li onclick="showSection('inputSection')" id="nav-inputSection">✍️ NEW ENTRY</li>
-                <li onclick="showSection('statsSection')" id="nav-statsSection">📊 DIAGNOSTICS</li>
-                <li onclick="logout()" style="color: #ff3366; margin-top: 20px;">🔓 LOGOUT</li>
-            </ul>
-        </nav>
-
-        <main class="main-content">
-            <!-- 대시보드 -->
-            <section id="menuSection" class="content-section">
-                <div class="section-title">EQUITY_OVERVIEW</div>
-                <div class="analysis-grid" id="equityStats"></div>
-                <div class="section-title">RECENT_LOGS</div>
-                <div id="recentLogs" class="log-grid"></div>
-            </section>
-
-            <!-- 입력 섹션 -->
-            <section id="inputSection" class="content-section center-layout" style="display:none;">
-                <div class="glass-input-box">
-                    <div class="section-title">EXECUTE_NEW_TRADE</div>
-                    <div class="pos-toggle">
-                        <button id="longBtn" class="active" onclick="setPos('LONG')">LONG</button>
-                        <button id="shortBtn" onclick="setPos('SHORT')">SHORT</button>
-                    </div>
-                    <input type="text" id="stockName" placeholder="SYMBOL">
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" id="tradeSize" placeholder="MARGIN">
-                        <input type="number" id="leverage" placeholder="LEV">
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" id="buyPrice" placeholder="ENTRY">
-                        <input type="number" id="sellPrice" placeholder="EXIT">
-                    </div>
-                    <textarea id="memo" placeholder="NOTES..."></textarea>
-                    <div class="file-input-wrapper">
-                        <label for="imgInput">📸 ADD CHART IMAGE</label>
-                        <input type="file" id="imgInput" accept="image/*" onchange="handleImg(this)">
-                        <div id="imgPreview"></div>
-                    </div>
-                    <button id="saveBtn" class="neon-save-btn" onclick="addLog()">CONFIRM SAVE</button>
-                </div>
-            </section>
-
-            <!-- 통계 섹션 -->
-            <section id="statsSection" class="content-section" style="display:none;">
-                <div class="section-title">DIAGNOSTICS_FILTER</div>
-                <div class="filter-area">
-                    <div class="quick-btns">
-                        <button onclick="setQuickDate(1)">1D</button>
-                        <button onclick="setQuickDate(7)">7D</button>
-                        <button onclick="setQuickDate(30)">1M</button>
-                        <button onclick="setQuickDate(365)">1Y</button>
-                    </div>
-                    <div class="date-inputs">
-                        <input type="date" id="startDate"> ~ <input type="date" id="endDate">
                         <button onclick="filterLogs()" class="query-btn">QUERY</button>
                     </div>
                 </div>
