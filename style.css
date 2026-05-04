@@ -1,0 +1,48 @@
+:root {
+    --bg-main: #0b0e11;
+    --bg-side: #1e2329;
+    --text-main: #eaecef;
+    --accent: #f3ba2f;
+    --green: #0ecb81;
+    --red: #f6465d;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; }
+.app-container { display: flex; min-height: 100vh; }
+
+/* 사이드바 */
+.sidebar { width: 240px; background: var(--bg-side); padding: 20px; border-right: 1px solid #30363d; }
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); margin-bottom: 40px; }
+.nav-menu { list-style: none; padding: 0; }
+.nav-menu li { padding: 15px; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.2s; }
+.nav-menu li:hover { background: #2b3139; }
+.nav-menu li.active { background: #2b3139; color: var(--accent); border-left: 4px solid var(--accent); }
+
+/* 메인 컨텐츠 */
+.main-content { flex: 1; padding: 40px; overflow-y: auto; }
+.content-section { max-width: 900px; margin: 0 auto; }
+
+/* 대시보드 카드 */
+.summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+.card { background: var(--bg-side); padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #30363d; }
+.card h4 { margin: 0; font-size: 0.8rem; color: #848e9c; }
+.card p { font-size: 1.4rem; font-weight: bold; margin: 10px 0 0; }
+
+/* 입력 폼 */
+.input-form { background: var(--bg-side); padding: 25px; border-radius: 15px; }
+.input-row { display: flex; gap: 10px; }
+.pos-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
+.pos-toggle button { flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; background: #474d57; color: #848e9c; }
+#longBtn.active { background: var(--green); color: white; }
+#shortBtn.active { background: var(--red); color: white; }
+input, textarea { background: #2b3139; border: 1px solid #474d57; color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
+.primary-btn { width: 100%; padding: 15px; background: var(--accent); color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+/* 로그 리스트 */
+.log-item { background: #1e2329; padding: 20px; border-radius: 12px; margin-bottom: 15px; border-left: 5px solid #474d57; }
+.plus { color: var(--green); } .minus { color: var(--red); }
+.log-img { max-width: 100%; margin-top: 15px; border-radius: 8px; }
+
+/* 필터 바 */
+.filter-bar { background: var(--bg-side); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+.filter-bar input { margin: 0; width: auto; }
