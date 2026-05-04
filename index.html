@@ -9,21 +9,17 @@
 </head>
 <body class="sidebar-open ticker-open">
 
-    <!-- 로그인 오버레이 -->
     <div id="loginOverlay" class="login-overlay">
         <div class="glass-input-box">
-            <div class="section-title" style="text-align: center; margin-bottom: 20px;">TERMINAL_ACCESS</div>
+            <div class="section-title" style="text-align: center;">TERMINAL_ACCESS</div>
             <input type="text" id="userName" placeholder="OPERATOR NAME">
             <input type="number" id="initialSeed" placeholder="INITIAL CAPITAL (USDT)">
             <button class="neon-save-btn" onclick="handleLogin()">INITIALIZE SYSTEM</button>
         </div>
     </div>
 
-    <!-- 하단 시세 바 -->
     <div class="ticker-wrapper" id="tickerWrapper">
-        <button class="ticker-toggle-btn" onclick="toggleTicker()">
-            <span id="tickerToggleIcon">▼</span>
-        </button>
+        <button class="ticker-toggle-btn" onclick="toggleTicker()"><span id="tickerToggleIcon">▼</span></button>
         <div class="ticker-bar" id="tickerBar">
             <div class="ticker-content">
                 <div class="ticker-item">BTC <span id="btcPrice">-</span> <small id="btcChange">-</small></div>
@@ -35,10 +31,7 @@
         </div>
     </div>
 
-    <!-- 사이드바 토글 -->
-    <button class="sidebar-toggle" onclick="toggleSidebar()">
-        <span id="toggleIcon">◀</span>
-    </button>
+    <button class="sidebar-toggle" onclick="toggleSidebar()"><span id="toggleIcon">◀</span></button>
 
     <div class="app-container">
         <nav class="sidebar" id="sidebar">
@@ -52,15 +45,15 @@
         </nav>
 
         <main class="main-content">
+            <!-- 대시보드 -->
             <section id="menuSection" class="content-section">
                 <div class="section-title">EQUITY_OVERVIEW</div>
                 <div class="analysis-grid" id="equityStats"></div>
-                <div class="section-title">PERIODIC_PERFORMANCE</div>
-                <div class="analysis-grid" id="periodStats"></div>
                 <div class="section-title">RECENT_LOGS</div>
                 <div id="recentLogs" class="log-grid"></div>
             </section>
 
+            <!-- 입력 섹션 -->
             <section id="inputSection" class="content-section center-layout" style="display:none;">
                 <div class="glass-input-box">
                     <div class="section-title">EXECUTE_NEW_TRADE</div>
@@ -70,23 +63,37 @@
                     </div>
                     <input type="text" id="stockName" placeholder="SYMBOL">
                     <div style="display: flex; gap: 10px;">
-                        <input type="number" id="tradeSize" placeholder="MARGIN (USDT)">
+                        <input type="number" id="tradeSize" placeholder="MARGIN">
                         <input type="number" id="leverage" placeholder="LEV">
                     </div>
                     <div style="display: flex; gap: 10px;">
                         <input type="number" id="buyPrice" placeholder="ENTRY">
                         <input type="number" id="sellPrice" placeholder="EXIT">
                     </div>
-                    <textarea id="memo" placeholder="STRATEGY NOTES..."></textarea>
-                    <button class="neon-save-btn" onclick="addLog()">CONFIRM SAVE</button>
+                    <textarea id="memo" placeholder="NOTES..."></textarea>
+                    <div class="file-input-wrapper">
+                        <label for="imgInput">📸 ADD CHART IMAGE</label>
+                        <input type="file" id="imgInput" accept="image/*" onchange="handleImg(this)">
+                        <div id="imgPreview"></div>
+                    </div>
+                    <button id="saveBtn" class="neon-save-btn" onclick="addLog()">CONFIRM SAVE</button>
                 </div>
             </section>
 
+            <!-- 통계 섹션 -->
             <section id="statsSection" class="content-section" style="display:none;">
-                <div class="section-title">CUSTOM_PERIOD_ANALYSIS</div>
+                <div class="section-title">DIAGNOSTICS_FILTER</div>
                 <div class="filter-area">
-                    <input type="date" id="startDate"> <span>~</span> <input type="date" id="endDate">
-                    <button onclick="filterLogs()">QUERY</button>
+                    <div class="quick-btns">
+                        <button onclick="setQuickDate(1)">1D</button>
+                        <button onclick="setQuickDate(7)">7D</button>
+                        <button onclick="setQuickDate(30)">1M</button>
+                        <button onclick="setQuickDate(365)">1Y</button>
+                    </div>
+                    <div class="date-inputs">
+                        <input type="date" id="startDate"> ~ <input type="date" id="endDate">
+                        <button onclick="filterLogs()" class="query-btn">QUERY</button>
+                    </div>
                 </div>
                 <div id="queryAnalysis" class="analysis-grid" style="margin-top:20px;"></div>
                 <div id="filteredLogs" class="log-grid"></div>
