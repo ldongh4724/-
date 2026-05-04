@@ -15,77 +15,19 @@ body {
     font-family: var(--font-main);
     margin: 0;
     transition: 0.3s;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-/* 폰트 일괄 변경 */
-h2, h3, .section-title, .logo, .ticker-bar, button {
+/* 폰트 적용 */
+h2, h3, .section-title, .sidebar-header, .ticker-bar, button {
     font-family: var(--font-logo);
-    letter-spacing: 1px;
 }
 
 input, textarea, .log-item {
     font-family: var(--font-mono);
 }
 
-/* 사이드바 토글 로직 */
-.sidebar {
-    width: 260px;
-    height: 100vh;
-    background: var(--side);
-    border-right: 1px solid #30363d;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: 0.3s ease-in-out;
-    z-index: 100;
-}
-
-.sidebar-toggle {
-    position: fixed;
-    left: 270px;
-    bottom: 20px;
-    background: var(--side);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 50%;
-    z-index: 110;
-    transition: 0.3s;
-}
-
-body.sidebar-closed .sidebar { left: -260px; }
-body.sidebar-closed .sidebar-toggle { left: 20px; }
-body.sidebar-closed .main-content { margin-left: 0; }
-
-.main-content {
-    margin-left: 260px;
-    padding: 60px 40px;
-    height: 100vh;
-    overflow-y: auto;
-    transition: 0.3s;
-}
-
-/* 중앙 정렬 레이아웃 */
-.center-layout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-}
-
-.glass-input-box {
-    width: 100%;
-    max-width: 500px;
-    background: rgba(22, 27, 34, 0.8);
-    border: 1px solid #30363d;
-    padding: 30px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-}
-
-/* 시세 바 업그레이드 */
+/* 상단 시세 바 */
 .ticker-bar {
     position: fixed;
     top: 0; width: 100%;
@@ -97,6 +39,80 @@ body.sidebar-closed .main-content { margin-left: 0; }
     font-size: 0.8rem;
     border-bottom: 1px solid #30363d;
     z-index: 90;
+    box-sizing: border-box;
 }
 .ticker-item { margin-right: 20px; display: inline-block; }
 .ticker-item small { font-size: 0.7rem; margin-left: 4px; }
+
+/* 사이드바 토글 로직 */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: var(--side);
+    border-right: 1px solid #30363d;
+    position: fixed;
+    left: 0; top: 0;
+    transition: 0.3s ease-in-out;
+    z-index: 100;
+}
+
+.sidebar-toggle {
+    position: fixed;
+    left: 270px; bottom: 20px;
+    background: var(--side);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 110;
+    transition: 0.3s;
+}
+
+body.sidebar-closed .sidebar { left: -260px; }
+body.sidebar-closed .sidebar-toggle { left: 20px; }
+body.sidebar-closed .main-content { margin-left: 0; }
+
+.main-content {
+    margin-left: 260px;
+    padding: 80px 40px;
+    transition: 0.3s;
+}
+
+/* 중앙 정렬 레이아웃 */
+.center-layout {
+    display: none; /* JS 제어 */
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.glass-input-box {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(22, 27, 34, 0.8);
+    border: 1px solid #30363d;
+    padding: 30px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* 버튼 및 입력창 스타일 생략 없이 적용 */
+.pos-toggle { display: flex; gap: 10px; margin-bottom: 20px; }
+.pos-toggle button { flex: 1; padding: 10px; border: 1px solid #30363d; background: transparent; color: white; cursor: pointer; }
+.pos-toggle button.active#longBtn { background: var(--green); color: black; border: none; }
+.pos-toggle button.active#shortBtn { background: var(--red); color: white; border: none; }
+
+input, textarea {
+    width: 100%; background: #0d1117; border: 1px solid #30363d;
+    color: white; padding: 12px; margin-bottom: 15px; border-radius: 5px; box-sizing: border-box;
+}
+.input-row { display: flex; gap: 10px; }
+.neon-save-btn {
+    width: 100%; padding: 15px; background: transparent; border: 1px solid var(--accent);
+    color: var(--accent); cursor: pointer; transition: 0.3s;
+}
+.neon-save-btn:hover { background: var(--accent); color: black; }
+
+/* 유틸리티 */
+.section-title { color: var(--accent); font-size: 1.2rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
