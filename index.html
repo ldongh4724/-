@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코인 선물 매매일지</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Crypto Future Log</h1>
+
+        <section class="summary-section">
+            <h3>📊 기간별 수익률 (%)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>오늘</th>
+                        <th>이번 주</th>
+                        <th>이번 달</th>
+                        <th>전체</th>
+                    </tr>
+                </thead>
+                <tbody id="summaryTable">
+                    <tr>
+                        <td id="dayProfit">-</td>
+                        <td id="weekProfit">-</td>
+                        <td id="monthProfit">-</td>
+                        <td id="yearProfit">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="input-section">
+            <div class="pos-toggle">
+                <button id="longBtn" class="active" onclick="setPos('LONG')">LONG</button>
+                <button id="shortBtn" onclick="setPos('SHORT')">SHORT</button>
+            </div>
+            
+            <input type="text" id="stockName" placeholder="종목명 (예: BTCUSDT)">
+            <div class="row">
+                <input type="number" id="leverage" placeholder="레버리지 (배)">
+                <input type="number" id="buyPrice" placeholder="진입가">
+                <input type="number" id="sellPrice" placeholder="종료가">
+            </div>
+            <textarea id="memo" placeholder="진입 근거 및 복기 메모"></textarea>
+            <div class="file-input">
+                <label for="imageInput">🖼️ 차트 스샷 첨부</label>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+            <button class="save-btn" onclick="addLog()">매매 기록 저장</button>
+        </section>
+
+        <section class="log-list" id="logList"></section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
