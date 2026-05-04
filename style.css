@@ -1,0 +1,42 @@
+:root {
+    --bg-main: #0b0e11;
+    --bg-side: #1e2329;
+    --text-main: #eaecef;
+    --accent: #f3ba2f;
+    --green: #0ecb81;
+    --red: #f6465d;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; overflow: hidden; }
+.app-container { display: flex; height: calc(100vh - 41px); }
+
+/* 시세 바 */
+.ticker-bar { background: #191c21; padding: 10px 40px; display: flex; gap: 30px; font-size: 0.85rem; border-bottom: 1px solid #30363d; z-index: 100; }
+.status-dot { margin-left: auto; color: var(--green); font-size: 0.7rem; }
+
+/* 사이드바 */
+.sidebar { width: 240px; background: var(--bg-side); padding: 20px; border-right: 1px solid #30363d; flex-shrink: 0; }
+.logo { font-size: 1.3rem; font-weight: bold; color: var(--accent); margin-bottom: 30px; }
+.nav-menu { list-style: none; padding: 0; }
+.nav-menu li { padding: 15px; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.2s; color: #848e9c; }
+.nav-menu li.active { background: #2b3139; color: var(--accent); font-weight: bold; }
+
+/* 컨텐츠 영역 */
+.main-content { flex: 1; padding: 40px; overflow-y: auto; }
+.content-section { max-width: 900px; margin: 0 auto; }
+
+/* 카드 및 분석 */
+.summary-cards, .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
+.card, .analysis-card { background: var(--bg-side); padding: 20px; border-radius: 12px; border: 1px solid #30363d; }
+.plus { color: var(--green); } .minus { color: var(--red); }
+
+/* 폼 스타일 */
+.input-row { display: flex; gap: 10px; }
+input, textarea { background: #2b3139; border: 1px solid #474d57; color: white; padding: 12px; border-radius: 8px; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
+.pos-toggle button { flex: 1; padding: 15px; border: none; border-radius: 8px; cursor: pointer; background: #474d57; color: #fff; margin-bottom: 20px; }
+#longBtn.active { background: var(--green); }
+#shortBtn.active { background: var(--red); }
+.primary-btn { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+.log-item { background: var(--bg-side); padding: 20px; border-radius: 12px; margin-bottom: 15px; border-left: 5px solid #474d57; }
+.log-img { max-width: 100%; border-radius: 8px; margin-top: 15px; }
