@@ -9,7 +9,17 @@
 </head>
 <body class="sidebar-open ticker-open">
 
-    <!-- 하단 시세 바 (위치 하단 이동 및 토글 버튼 추가) -->
+    <!-- 로그인 오버레이 -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="glass-input-box">
+            <div class="section-title">TERMINAL_ACCESS</div>
+            <input type="text" id="userName" placeholder="OPERATOR NAME">
+            <input type="number" id="initialSeed" placeholder="INITIAL CAPITAL (USDT)">
+            <button class="neon-save-btn" onclick="handleLogin()">INITIALIZE SYSTEM</button>
+        </div>
+    </div>
+
+    <!-- 하단 시세 바 -->
     <div class="ticker-wrapper" id="tickerWrapper">
         <button class="ticker-toggle-btn" onclick="toggleTicker()">
             <span id="tickerToggleIcon">▼</span> TICKER
@@ -21,39 +31,39 @@
                 <div class="ticker-item">SOL <span id="solPrice">-</span> <small id="solChange">-</small></div>
                 <div class="ticker-item">XRP <span id="xrpPrice">-</span> <small id="xrpChange">-</small></div>
             </div>
-            <div class="status-live">● SYSTEM ACTIVE</div>
+            <div class="status-live" id="userDisplay">● SYSTEM ACTIVE</div>
         </div>
     </div>
 
-    <!-- 사이드바 토글 버튼 -->
     <button class="sidebar-toggle" onclick="toggleSidebar()">
         <span id="toggleIcon">◀</span>
     </button>
 
     <div class="app-container">
         <nav class="sidebar" id="sidebar">
-            <div class="sidebar-header">TERMINAL_v1.0</div>
+            <div class="sidebar-header" id="terminalBrand">TERMINAL_v1.0</div>
             <ul class="nav-menu">
                 <li onclick="showSection('menuSection')" class="active" id="nav-menuSection">🏠 DASHBOARD</li>
                 <li onclick="showSection('inputSection')" id="nav-inputSection">✍️ NEW ENTRY</li>
                 <li onclick="showSection('statsSection')" id="nav-statsSection">📊 DIAGNOSTICS</li>
+                <li onclick="logout()" style="color: #ff3366; margin-top: 20px;">🔓 LOGOUT</li>
             </ul>
         </nav>
 
         <main class="main-content">
             <!-- DASHBOARD -->
             <section id="menuSection" class="content-section">
-                <div class="section-title">PERIODIC_PNL_OVERVIEW</div>
-                <div class="analysis-grid" id="periodStats"></div>
+                <div class="section-title">EQUITY_OVERVIEW</div>
+                <div class="analysis-grid" id="equityStats"></div>
 
-                <div class="section-title">LIFETIME_STATISTICS</div>
-                <div class="analysis-grid" id="lifetimeStats"></div>
+                <div class="section-title">PERIODIC_PERFORMANCE</div>
+                <div class="analysis-grid" id="periodStats"></div>
 
                 <div class="section-title">RECENT_LOGS</div>
                 <div id="recentLogs" class="log-grid"></div>
             </section>
 
-            <!-- INPUT -->
+            <!-- INPUT (투자금 입력 추가) -->
             <section id="inputSection" class="content-section center-layout" style="display:none;">
                 <div class="glass-input-box">
                     <div class="section-title">EXECUTE_NEW_TRADE</div>
@@ -62,13 +72,15 @@
                         <button id="shortBtn" onclick="setPos('SHORT')">SHORT</button>
                     </div>
                     <input type="text" id="stockName" placeholder="SYMBOL">
-                    <div class="input-row">
+                    <div class="input-row" style="display: flex; gap: 10px;">
+                        <input type="number" id="tradeSize" placeholder="MARGIN (USDT)">
                         <input type="number" id="leverage" placeholder="LEV">
+                    </div>
+                    <div class="input-row" style="display: flex; gap: 10px;">
                         <input type="number" id="buyPrice" placeholder="ENTRY">
                         <input type="number" id="sellPrice" placeholder="EXIT">
                     </div>
                     <textarea id="memo" placeholder="STRATEGY NOTES..."></textarea>
-                    <input type="file" id="imageInput" accept="image/*">
                     <button class="neon-save-btn" onclick="addLog()">CONFIRM SAVE</button>
                 </div>
             </section>
@@ -84,18 +96,6 @@
                 <div id="filteredLogs" class="log-grid"></div>
             </section>
         </main>
-    </div>
-
-    <!-- 수정 모달 -->
-    <div id="editModal" class="modal">
-        <div class="modal-content glass-card">
-            <h3>EDIT_RECORD</h3>
-            <div id="editForm"></div>
-            <div class="modal-btns">
-                <button class="save-btn" onclick="submitEdit()">SAVE</button>
-                <button class="cancel-btn" onclick="closeModal()">CANCEL</button>
-            </div>
-        </div>
     </div>
 
     <script src="script.js"></script>
