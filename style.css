@@ -11,37 +11,74 @@
 
 body { background: var(--bg); color: #e6edf3; font-family: var(--font-main); margin: 0; transition: 0.3s; overflow-x: hidden; }
 
-/* 폰트 및 공통 디자인 */
-h3, .section-title, .sidebar-header, .ticker-bar, button { font-family: var(--font-logo); }
+/* 폰트 */
+h3, .section-title, .sidebar-header, .ticker-wrapper, button { font-family: var(--font-logo); }
 input, textarea, .log-item, .analysis-grid { font-family: var(--font-mono); }
 
-.ticker-bar {
-    position: fixed; top: 0; left: 260px; width: calc(100% - 260px);
-    background: rgba(5, 7, 10, 0.9); backdrop-filter: blur(5px);
-    display: flex; justify-content: space-between; padding: 12px 30px;
-    font-size: 0.8rem; border-bottom: 1px solid #30363d; z-index: 120;
-    transition: 0.3s ease-in-out; box-sizing: border-box;
+/* 하단 시세 바 컨테이너 */
+.ticker-wrapper {
+    position: fixed;
+    bottom: 0; left: 260px;
+    width: calc(100% - 260px);
+    z-index: 120;
+    transition: 0.3s ease-in-out;
 }
-body.sidebar-closed .ticker-bar { left: 0; width: 100%; }
+body.sidebar-closed .ticker-wrapper { left: 0; width: 100%; }
+body.ticker-closed .ticker-bar { transform: translateY(100%); }
+body.ticker-closed .ticker-toggle-btn { bottom: 0; }
 
+/* 시세 바 토글 버튼 */
+.ticker-toggle-btn {
+    position: absolute;
+    top: -30px; right: 20px;
+    background: var(--side);
+    border: 1px solid #30363d;
+    border-bottom: none;
+    color: var(--accent);
+    font-size: 0.6rem;
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+}
+
+.ticker-bar {
+    background: rgba(5, 7, 10, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 30px;
+    font-size: 0.8rem;
+    border-top: 1px solid #30363d;
+    transition: 0.3s ease-in-out;
+}
+
+.ticker-item { margin-right: 20px; display: inline-block; }
+.ticker-item small { font-size: 0.7rem; margin-left: 4px; }
+
+/* 사이드바 */
 .sidebar { width: 260px; height: 100vh; background: var(--side); border-right: 1px solid #30363d; position: fixed; left: 0; top: 0; transition: 0.3s ease-in-out; z-index: 130; }
 body.sidebar-closed .sidebar { left: -260px; }
+.sidebar-header { padding: 25px; font-size: 1.1rem; color: var(--accent); border-bottom: 1px solid #30363d; }
+.nav-menu { list-style: none; padding: 10px; margin: 0; }
+.nav-menu li { padding: 15px; cursor: pointer; color: #8b949e; transition: 0.2s; border-radius: 8px; margin-bottom: 5px; }
+.nav-menu li.active { background: #161b22; color: var(--accent); }
 
-.sidebar-toggle { position: fixed; left: 270px; bottom: 20px; background: var(--side); border: 1px solid var(--accent); color: var(--accent); padding: 10px 15px; cursor: pointer; z-index: 150; transition: 0.3s; }
+/* 토글 버튼 */
+.sidebar-toggle { position: fixed; left: 270px; top: 20px; background: var(--side); border: 1px solid var(--accent); color: var(--accent); padding: 10px 15px; cursor: pointer; z-index: 150; transition: 0.3s; }
 body.sidebar-closed .sidebar-toggle { left: 20px; }
 
-.main-content { margin-left: 260px; padding: 80px 40px; transition: 0.3s; }
+.main-content { margin-left: 260px; padding: 40px; padding-bottom: 100px; transition: 0.3s; }
 body.sidebar-closed .main-content { margin-left: 0; }
 
-/* 분석 그리드 (카드 레이아웃) */
+/* 통계 카드 */
 .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
 .card { background: #161b22; padding: 15px; border-radius: 8px; border: 1px solid #30363d; text-align: center; }
-.card h4 { margin: 0; font-size: 0.7rem; color: #848e9c; letter-spacing: 1px; }
+.card h4 { margin: 0; font-size: 0.7rem; color: #848e9c; }
 .card p { margin: 8px 0 0; font-size: 1.2rem; font-weight: bold; }
 
-/* 입력창 및 로그 카드 */
+/* 입력창 & 로그 */
 .center-layout { display: none; justify-content: center; align-items: center; min-height: 80vh; }
-.glass-input-box { width: 100%; max-width: 500px; background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; padding: 30px; border-radius: 15px; backdrop-filter: blur(10px); }
+.glass-input-box { width: 100%; max-width: 500px; background: rgba(22, 27, 34, 0.8); border: 1px solid #30363d; padding: 30px; border-radius: 15px; }
 input, textarea { width: 100%; background: #0d1117; border: 1px solid #30363d; color: white; padding: 12px; margin-bottom: 10px; border-radius: 5px; box-sizing: border-box; }
 .log-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
 .log-item { background: #0d1117; padding: 15px; border-radius: 8px; border: 1px solid #30363d; }
