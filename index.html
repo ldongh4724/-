@@ -3,64 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Future Pro | Terminal</title>
+    <title>Crypto Terminal Pro</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- 전문적인 느낌의 JetBrains Mono와 Orbitron 폰트 추가 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="sidebar-open"> <!-- 기본 상태: 열림 -->
+
+    <!-- 상단 통합 시세 바 (BTC, ETH, SOL, XRP + 변동률) -->
     <div class="ticker-bar">
-        <div class="ticker-item">BTC <span id="btcPrice">-</span></div>
-        <div class="ticker-item">ETH <span id="ethPrice">-</span></div>
+        <div class="ticker-content">
+            <div class="ticker-item">BTC <span id="btcPrice">-</span> <small id="btcChange">-</small></div>
+            <div class="ticker-item">ETH <span id="ethPrice">-</span> <small id="ethChange">-</small></div>
+            <div class="ticker-item">SOL <span id="solPrice">-</span> <small id="solChange">-</small></div>
+            <div class="ticker-item">XRP <span id="xrpPrice">-</span> <small id="xrpChange">-</small></div>
+        </div>
         <div class="status-live">● SYSTEM ACTIVE</div>
     </div>
 
+    <!-- 사이드바 토글 버튼 -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <span id="toggleIcon">◀</span>
+    </button>
+
     <div class="app-container">
-        <nav class="sidebar">
-            <div class="logo">TERMINAL</div>
+        <!-- 사이드바 (터미널) -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">TERMINAL_v1.0</div>
             <ul class="nav-menu">
                 <li onclick="showSection('menuSection')" class="active" id="nav-menuSection">🏠 DASHBOARD</li>
-                <li onclick="showSection('inputSection')" id="nav-inputSection">✍️ NEW TRADE</li>
-                <li onclick="showSection('statsSection')" id="nav-statsSection">📊 AI ANALYSIS</li>
+                <li onclick="showSection('inputSection')" id="nav-inputSection">✍️ NEW ENTRY</li>
+                <li onclick="showSection('statsSection')" id="nav-statsSection">📊 DIAGNOSTICS</li>
             </ul>
         </nav>
 
+        <!-- 메인 프레임 -->
         <main class="main-content">
             <!-- DASHBOARD -->
             <section id="menuSection" class="content-section">
-                <div class="section-header"><h2>OVERVIEW</h2></div>
+                <div class="section-title">SYSTEM_OVERVIEW</div>
                 <div class="summary-cards" id="homeSummary"></div>
-                <h3>RECENT TRADES</h3>
+                <div class="section-title">RECENT_LOGS</div>
                 <div id="recentLogs" class="log-grid"></div>
             </section>
 
-            <!-- INPUT -->
-            <section id="inputSection" class="content-section" style="display:none;">
-                <div class="section-header"><h2>NEW ENTRY</h2></div>
-                <div class="glass-card">
+            <!-- INPUT (중앙 정렬 레이아웃) -->
+            <section id="inputSection" class="content-section center-layout" style="display:none;">
+                <div class="glass-input-box">
+                    <div class="section-title">EXECUTE_NEW_TRADE</div>
                     <div class="pos-toggle">
                         <button id="longBtn" class="active" onclick="setPos('LONG')">LONG</button>
                         <button id="shortBtn" onclick="setPos('SHORT')">SHORT</button>
                     </div>
                     <input type="text" id="stockName" placeholder="SYMBOL (e.g. BTCUSDT)">
                     <div class="input-row">
-                        <input type="number" id="leverage" placeholder="LEVERAGE">
+                        <input type="number" id="leverage" placeholder="LEV">
                         <input type="number" id="buyPrice" placeholder="ENTRY">
                         <input type="number" id="sellPrice" placeholder="EXIT">
                     </div>
-                    <textarea id="memo" placeholder="STRATEGY & NOTES"></textarea>
+                    <textarea id="memo" placeholder="STRATEGY NOTES..."></textarea>
                     <input type="file" id="imageInput" accept="image/*">
-                    <button class="neon-btn" onclick="addLog()">EXECUTE SAVE</button>
+                    <button class="neon-save-btn" onclick="addLog()">CONFIRM SAVE</button>
                 </div>
             </section>
 
             <!-- STATS -->
             <section id="statsSection" class="content-section" style="display:none;">
-                <div class="section-header"><h2>AI DIAGNOSTICS</h2></div>
+                <div class="section-title">PERFORMANCE_ANALYSIS</div>
                 <div id="aiAnalysis" class="analysis-grid"></div>
-                <h3 style="margin-top:40px;">HISTORY FILTER</h3>
-                <div class="filter-bar">
-                    <input type="date" id="startDate"> ~ <input type="date" id="endDate">
-                    <button onclick="filterLogs()">SEARCH</button>
+                <div class="filter-area">
+                    <input type="date" id="startDate"> <span>~</span> <input type="date" id="endDate">
+                    <button onclick="filterLogs()">QUERY</button>
                 </div>
                 <div id="filteredLogs" class="log-grid"></div>
             </section>
@@ -70,7 +83,7 @@
     <!-- 수정용 모달 -->
     <div id="editModal" class="modal">
         <div class="modal-content glass-card">
-            <h3>EDIT TRADE</h3>
+            <h3>EDIT_RECORD</h3>
             <div id="editForm"></div>
             <div class="modal-btns">
                 <button class="save-btn" onclick="submitEdit()">SAVE</button>
