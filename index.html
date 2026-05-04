@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Terminal Pro</title>
     <link rel="stylesheet" href="style.css">
-    <!-- 전문적인 느낌의 JetBrains Mono와 Orbitron 폰트 추가 -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="sidebar-open"> <!-- 기본 상태: 열림 -->
+<body class="sidebar-open">
 
-    <!-- 상단 통합 시세 바 (BTC, ETH, SOL, XRP + 변동률) -->
+    <!-- 상단 시세 바: 4종 코인 및 변동률 -->
     <div class="ticker-bar">
         <div class="ticker-content">
             <div class="ticker-item">BTC <span id="btcPrice">-</span> <small id="btcChange">-</small></div>
@@ -21,13 +20,12 @@
         <div class="status-live">● SYSTEM ACTIVE</div>
     </div>
 
-    <!-- 사이드바 토글 버튼 -->
+    <!-- 터미널 토글 버튼 -->
     <button class="sidebar-toggle" onclick="toggleSidebar()">
         <span id="toggleIcon">◀</span>
     </button>
 
     <div class="app-container">
-        <!-- 사이드바 (터미널) -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">TERMINAL_v1.0</div>
             <ul class="nav-menu">
@@ -37,7 +35,6 @@
             </ul>
         </nav>
 
-        <!-- 메인 프레임 -->
         <main class="main-content">
             <!-- DASHBOARD -->
             <section id="menuSection" class="content-section">
@@ -47,7 +44,7 @@
                 <div id="recentLogs" class="log-grid"></div>
             </section>
 
-            <!-- INPUT (중앙 정렬 레이아웃) -->
+            <!-- INPUT: 중앙 정렬 레이아웃 -->
             <section id="inputSection" class="content-section center-layout" style="display:none;">
                 <div class="glass-input-box">
                     <div class="section-title">EXECUTE_NEW_TRADE</div>
@@ -80,7 +77,7 @@
         </main>
     </div>
 
-    <!-- 수정용 모달 -->
+    <!-- 수정 모달 -->
     <div id="editModal" class="modal">
         <div class="modal-content glass-card">
             <h3>EDIT_RECORD</h3>
