@@ -9,8 +9,8 @@
 </head>
 <body class="sidebar-open">
 
-    <!-- 상단 시세 바: 4종 코인 및 변동률 -->
-    <div class="ticker-bar">
+    <!-- 상단 시세 바 -->
+    <div class="ticker-bar" id="tickerBar">
         <div class="ticker-content">
             <div class="ticker-item">BTC <span id="btcPrice">-</span> <small id="btcChange">-</small></div>
             <div class="ticker-item">ETH <span id="ethPrice">-</span> <small id="ethChange">-</small></div>
@@ -28,6 +28,15 @@
     <div class="app-container">
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">TERMINAL_v1.0</div>
+            
+            <!-- 메뉴 내 기간별 수익률 통계 -->
+            <div class="sidebar-stats" id="sidebarStats">
+                <div class="stat-row">24H PNL: <span id="stat24h">-</span></div>
+                <div class="stat-row">7D PNL: <span id="stat7d">-</span></div>
+                <div class="stat-row">30D PNL: <span id="stat30d">-</span></div>
+                <div class="stat-row">1Y PNL: <span id="stat1y">-</span></div>
+            </div>
+
             <ul class="nav-menu">
                 <li onclick="showSection('menuSection')" class="active" id="nav-menuSection">🏠 DASHBOARD</li>
                 <li onclick="showSection('inputSection')" id="nav-inputSection">✍️ NEW ENTRY</li>
@@ -44,7 +53,7 @@
                 <div id="recentLogs" class="log-grid"></div>
             </section>
 
-            <!-- INPUT: 중앙 정렬 레이아웃 -->
+            <!-- INPUT (가운데 정렬) -->
             <section id="inputSection" class="content-section center-layout" style="display:none;">
                 <div class="glass-input-box">
                     <div class="section-title">EXECUTE_NEW_TRADE</div>
@@ -64,10 +73,11 @@
                 </div>
             </section>
 
-            <!-- STATS -->
+            <!-- STATS (승률 및 기간 검색) -->
             <section id="statsSection" class="content-section" style="display:none;">
                 <div class="section-title">PERFORMANCE_ANALYSIS</div>
                 <div id="aiAnalysis" class="analysis-grid"></div>
+                
                 <div class="filter-area">
                     <input type="date" id="startDate"> <span>~</span> <input type="date" id="endDate">
                     <button onclick="filterLogs()">QUERY</button>
