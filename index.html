@@ -9,7 +9,6 @@
 </head>
 <body class="sidebar-open">
 
-    <!-- 상단 시세 바 -->
     <div class="ticker-bar" id="tickerBar">
         <div class="ticker-content">
             <div class="ticker-item">BTC <span id="btcPrice">-</span> <small id="btcChange">-</small></div>
@@ -20,7 +19,6 @@
         <div class="status-live">● SYSTEM ACTIVE</div>
     </div>
 
-    <!-- 터미널 토글 버튼 -->
     <button class="sidebar-toggle" onclick="toggleSidebar()">
         <span id="toggleIcon">◀</span>
     </button>
@@ -28,15 +26,6 @@
     <div class="app-container">
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">TERMINAL_v1.0</div>
-            
-            <!-- 메뉴 내 기간별 수익률 통계 -->
-            <div class="sidebar-stats" id="sidebarStats">
-                <div class="stat-row">24H PNL: <span id="stat24h">-</span></div>
-                <div class="stat-row">7D PNL: <span id="stat7d">-</span></div>
-                <div class="stat-row">30D PNL: <span id="stat30d">-</span></div>
-                <div class="stat-row">1Y PNL: <span id="stat1y">-</span></div>
-            </div>
-
             <ul class="nav-menu">
                 <li onclick="showSection('menuSection')" class="active" id="nav-menuSection">🏠 DASHBOARD</li>
                 <li onclick="showSection('inputSection')" id="nav-inputSection">✍️ NEW ENTRY</li>
@@ -45,15 +34,23 @@
         </nav>
 
         <main class="main-content">
-            <!-- DASHBOARD -->
+            <!-- DASHBOARD: 여기에 하루, 일주일, 한달, 일년 수익률과 전체 통계 배치 -->
             <section id="menuSection" class="content-section">
-                <div class="section-title">SYSTEM_OVERVIEW</div>
-                <div class="summary-cards" id="homeSummary"></div>
+                <div class="section-title">PERIODIC_PNL_OVERVIEW</div>
+                <div class="analysis-grid" id="periodStats">
+                    <!-- JS로 실시간 렌더링 -->
+                </div>
+
+                <div class="section-title">LIFETIME_STATISTICS</div>
+                <div class="analysis-grid" id="lifetimeStats">
+                    <!-- JS로 전체 거래횟수, 승률 렌더링 -->
+                </div>
+
                 <div class="section-title">RECENT_LOGS</div>
                 <div id="recentLogs" class="log-grid"></div>
             </section>
 
-            <!-- INPUT (가운데 정렬) -->
+            <!-- INPUT -->
             <section id="inputSection" class="content-section center-layout" style="display:none;">
                 <div class="glass-input-box">
                     <div class="section-title">EXECUTE_NEW_TRADE</div>
@@ -61,7 +58,7 @@
                         <button id="longBtn" class="active" onclick="setPos('LONG')">LONG</button>
                         <button id="shortBtn" onclick="setPos('SHORT')">SHORT</button>
                     </div>
-                    <input type="text" id="stockName" placeholder="SYMBOL (e.g. BTCUSDT)">
+                    <input type="text" id="stockName" placeholder="SYMBOL">
                     <div class="input-row">
                         <input type="number" id="leverage" placeholder="LEV">
                         <input type="number" id="buyPrice" placeholder="ENTRY">
@@ -73,21 +70,20 @@
                 </div>
             </section>
 
-            <!-- STATS (승률 및 기간 검색) -->
+            <!-- STATS: 기간 설정에 따른 수익률, 거래횟수, 승률 -->
             <section id="statsSection" class="content-section" style="display:none;">
-                <div class="section-title">PERFORMANCE_ANALYSIS</div>
-                <div id="aiAnalysis" class="analysis-grid"></div>
-                
+                <div class="section-title">CUSTOM_PERIOD_ANALYSIS</div>
                 <div class="filter-area">
                     <input type="date" id="startDate"> <span>~</span> <input type="date" id="endDate">
                     <button onclick="filterLogs()">QUERY</button>
                 </div>
+                
+                <div id="queryAnalysis" class="analysis-grid" style="margin-top:20px;"></div>
                 <div id="filteredLogs" class="log-grid"></div>
             </section>
         </main>
     </div>
 
-    <!-- 수정 모달 -->
     <div id="editModal" class="modal">
         <div class="modal-content glass-card">
             <h3>EDIT_RECORD</h3>
